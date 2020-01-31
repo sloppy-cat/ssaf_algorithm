@@ -75,6 +75,21 @@ def num_card():
                 result[result.index(max(result))] = 0
         print(f'#{test_case} {result.index(max(result))} {max(result)}')
 
+def gugan_sum():
+    T = int(input())
+    for test_case in range(1, T + 1):
+        N, M = map(int,input().split())
+        ai = list(map(int,input().split()))      
+        
+        minmin = 1000000
+        maxmax = 0
+
+        for i in range(0,N-M+1):
+            if sum(ai[i:i+M])> maxmax:
+                maxmax = sum(ai[i:i+M])
+            if sum(ai[i:i+M]) < minmin:
+                minmin = sum(ai[i:i+M])
+        print(f'#{test_case} {maxmax-minmin}')
 
 def flatten():
     T = 10
@@ -97,3 +112,4 @@ if __name__ == '__main__':
     #electronic_bus()
     #num_card()
     #gugan_sum()
+    #flatten()
