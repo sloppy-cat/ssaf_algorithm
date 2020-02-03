@@ -31,10 +31,12 @@ def min_max():
             elif data < minmin:
                 minmin = data
         result.append(maxmax-minmin)
+
     for i,x in zip(range(1,T+1),result):
         print(f'#{i} {x}')
 
 def electronic_bus():
+    #충전기의 위치를 저장한 경우
     T = int(input())
     for test_case in range(1, T + 1):
         K, N, M = list(map(int,input().split()))
@@ -58,6 +60,13 @@ def electronic_bus():
             if result == 0:
                 break
         print(f'#{test_case} {result}')
+
+def electronic_bus_teacher():
+    T = int(input())
+    for test_case in range(1, T + 1):
+        K, N, M = list(map(int,input().split()))
+        charger = list(map(int,input().split()))
+        charger = 
 
 def num_card():
     T = int(input())
