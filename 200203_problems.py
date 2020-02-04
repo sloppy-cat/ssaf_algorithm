@@ -1,4 +1,3 @@
-#강사님 바뀌셨음
 def color():
     T = int(input())
     for test_case in range(1, T + 1):
@@ -64,18 +63,22 @@ def find_bibi(l,r,F,n):
         return find_bibi(c,r,F,n+1)
     else :
         return find_bibi(l,c,F,n+1)
+
 def binary():
     T = int(input())
     for test_case in range(1, T + 1):
         P, A, B = list(map(int,input().split()))
         l,r = 1,P
+
         a = find_bibi(l,r,A,0)
         b = find_bibi(l,r,B,0)
         R = 0
+
         if a>b:
             R = 'A'
         elif b>a:
             R = 'B'
+
         print(f'#{test_case} {R}')
 
 
