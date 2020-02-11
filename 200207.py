@@ -123,7 +123,6 @@ def find_sagak(arr,cnt,x,y):
     for i in range(4):
         if 0<=y+dy[i]<len(arr) and 0<=x+dx[i]<len(arr):
             if arr[y][x] + 1 == arr[y+dy[i]][x+dx[i]]:
-                arr[y][x] = 0
                 return find_sagak(arr,cnt+1,x+dx[i],y+dy[i])
         return cnt
 def sagak():
@@ -134,11 +133,11 @@ def sagak():
         result = [0,0]
         for i in range(n):
             for j in range(n):
-                if arr[j][i] !=0:
-                    a = find_sagak(arr,1,i,j)
-                    if a>result[1]:
-                        result = [arr[j][i],a]
-
+                a = find_sagak(arr,1,i,j)
+                print(a)
+                print(type(a))
+                if a>result[1]:
+                    result = [arr[j][i],a]
         print(f'#{tc} ',end='')
         print(*result)
 
