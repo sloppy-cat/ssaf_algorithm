@@ -1,30 +1,41 @@
-def p(a):
-    for n in range(100,0,-1):
-        for i in range(100):
-            for j in range(101-n):
-                t = [a[k][i] for k in range(j,j+n)]
-                b=a[i][j:j+n]
-                if b==list(reversed(b)) or t == list(reversed(t)):
-                    return n
-for c in range(1,11):
-    input()
-    a = [list(input()) for i in range(100)]
-    r = p(a)
-    print(f'#{c} {r}')
+import sys
+sys.stdin = open('0211.findnum.txt','r')
 
-    
-    def pel(arr):
-    for n in range(100,0,-1):
-        for i in range(100):
-            for j in range(101-n):
-                if arr[i][j:j+n] == list(reversed(arr[i][j:j+n])):
-                    return n
-                tmp = [arr[k][i] for k in range(j,j+n)]
-                if tmp == list(reversed(tmp)):
-                    return n
- 
-for tc in range(1,11):
-    input()
-    arr = [list(input()) for i in range(100)]
-    r = pel(arr)
-    print(f'#{tc} {r}')
+def numbers():
+
+    T= int(input())
+    for i in range(1,1+T):
+        N = int(input())
+        val = [list(map(int,input().split())) for j in range(N)]
+
+        newlist=[]
+        for a in range(N):
+            for b in range(N):
+                a1 = a
+                b1 = b
+                if a1+1<N and val[a1+1][b1]:
+                    while a1+1<N and val[a1+1][b1]:
+                        a1 += 1
+                if b1+1<N and val[a1][b1+1]:
+                    while b1+1<N and val[a1][b1+1]:
+                        b1 += 1
+
+                length = (a1-a)+1
+                vertical = (b1-b)+1
+                multi = length*vertical
+
+                newlist += [[multi,vertical,length]]
+                
+                for a in range(a,a1+1):
+                    for b in range(b,b1+1):
+                        val[a][b] = 0
+        newlist.sort()
+
+
+        print('#{} {}'.format(i,len(newlist)),end='')
+
+        for i in range(len(newlist)):
+            print('',end=' ')
+            print(*newlist[i][1:],end='')
+        print()
+numbers()
