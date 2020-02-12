@@ -1,41 +1,35 @@
-import sys
-sys.stdin = open('0211.findnum.txt','r')
+def omok():
+    ppan = [[0]*21]
+    omok_p = [[0] + list(map(int, input().split())) + [0] for i in range(19)]
+    omok_pan = ppan + omok_p + ppan
 
-def numbers():
+    dx = [1, 1, 1, 0] 
+    dy = [-1, 1, 0, 1]
 
-    T= int(input())
-    for i in range(1,1+T):
-        N = int(input())
-        val = [list(map(int,input().split())) for j in range(N)]
+    for j in range(1, 20):
+        for i in range(1, 20):
+            dol = omok_pan[i][j]
+            if dol:
+                for n in range(4):
+                    count = 1
+                    x = j
+                    y = i
 
-        newlist=[]
-        for a in range(N):
-            for b in range(N):
-                a1 = a
-                b1 = b
-                if a1+1<N and val[a1+1][b1]:
-                    while a1+1<N and val[a1+1][b1]:
-                        a1 += 1
-                if b1+1<N and val[a1][b1+1]:
-                    while b1+1<N and val[a1][b1+1]:
-                        b1 += 1
-
-                length = (a1-a)+1
-                vertical = (b1-b)+1
-                multi = length*vertical
-
-                newlist += [[multi,vertical,length]]
-                
-                for a in range(a,a1+1):
-                    for b in range(b,b1+1):
-                        val[a][b] = 0
-        newlist.sort()
-
-
-        print('#{} {}'.format(i,len(newlist)),end='')
-
-        for i in range(len(newlist)):
-            print('',end=' ')
-            print(*newlist[i][1:],end='')
-        print()
-numbers()
+                    while True:
+                        if omok_pan[y + dy[n]][x + dx[n]] == omok_pan[i][j]:
+                            x += dx[n]
+                            y += dy[n]
+                            count += 1
+                            if count > 5:
+                                break
+                        else:
+                                break
+                    if count == 5:
+                        if omok_pan[i - dy[n]][j - dx[n]] != dol:
+                            print(dol)
+                            print(i, j)
+                            return
+    else:
+        print(0)
+        return 
+omok()
