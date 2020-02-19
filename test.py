@@ -1,41 +1,120 @@
 import sys
-sys.stdin = open('0211.findnum.txt','r')
+sys.stdin = open("input.txt", "r")
 
-def numbers():
+dx = [-1, 1, 0, 0]
+dy = [0, 0, -1, 1]
 
-    T= int(input())
-    for i in range(1,1+T):
-        N = int(input())
-        val = [list(map(int,input().split())) for j in range(N)]
+T = int(input())
+for t in range(T):
+    N, S = input().split()
+    N = int(N)
+    arr = [[0]*(N+2)] + [[0] + list(map(int, input().split())) + [0] for i in range(N)] + [[0]*(N+2)]
 
-        newlist=[]
-        for a in range(N):
-            for b in range(N):
-                a1 = a
-                b1 = b
-                if a1+1<N and val[a1+1][b1]:
-                    while a1+1<N and val[a1+1][b1]:
-                        a1 += 1
-                if b1+1<N and val[a1][b1+1]:
-                    while b1+1<N and val[a1][b1+1]:
-                        b1 += 1
+    if S == 'up':
+        for a in range(N-1):
+            for i in range(1,N):
+                for j in range(1,N+1):
+                    if arr[i][j] == 0:
+                        arr[i][j] = arr[i+1][j]
+                        arr[i+1][j] = 0
+        for p in range(1,N):
+            for q in range(1,N+1):
+                if arr[p][q] == 0:
+                    arr[p][q] = arr[p+1][q]
+                    arr[p+1][q] = 0
+                    for i in range(1,N):
+                        for j in range(1,N+1):
+                            if arr[i][j] == 0:
+                                arr[i][j] = arr[i+1][j]
+                                arr[i+1][j] = 0
+                if arr[p][q] == arr[p+1][q]:
+                    arr[p][q] *= 2
+                    arr[p+1][q] = 0
+                    for i in range(1,N):
+                        for j in range(1,N+1):
+                            if arr[i][j] == 0:
+                                arr[i][j] = arr[i+1][j]
+                                arr[i+1][j] = 0
 
-                length = (a1-a)+1
-                vertical = (b1-b)+1
-                multi = length*vertical
+    if S == 'down':
+        for a in range(N-1):
+            for i in range(N,1,-1):
+                for j in range(1,N+1):
+                    if arr[i][j] == 0:
+                        arr[i][j] = arr[i-1][j]
+                        arr[i-1][j] = 0
+        for p in range(N,1,-1):
+            for q in range(1,N+1):
+                if arr[p][q] == 0:
+                    arr[p][q] = arr[p-1][q]
+                    arr[p-1][q] = 0
+                    for i in range(N,1,-1):
+                        for j in range(1,N+1):
+                            if arr[i][j] == 0:
+                                arr[i][j] = arr[i-1][j]
+                                arr[i-1][j] = 0
+                if arr[p][q] == arr[p-1][q]:
+                    arr[p][q] *= 2
+                    arr[p-1][q] = 0
+                    for i in range(N,1,-1):
+                        for j in range(1,N+1):
+                            if arr[i][j] == 0:
+                                arr[i][j] = arr[i-1][j]
+                                arr[i-1][j] = 0
 
-                newlist += [[multi,vertical,length]]
-                
-                for a in range(a,a1+1):
-                    for b in range(b,b1+1):
-                        val[a][b] = 0
-        newlist.sort()
+    if S == 'left':
+        for a in range(N-1):
+            for i in range(1,N):
+                for j in range(1,N+1):
+                    if arr[j][i] == 0:
+                        arr[j][i] = arr[j][i+1]
+                        arr[j][i+1] = 0
+        for p in range(1,N):
+            for q in range(1,N+1):
+                if arr[q][p] == 0:
+                    arr[q][p] = arr[q][p+1]
+                    arr[q][p+1] = 0
+                    for i in range(1,N):
+                        for j in range(1,N+1):
+                            if arr[j][i] == 0:
+                                arr[j][i] = arr[j][i+1]
+                                arr[j][i+1] = 0
+                if arr[q][p] == arr[q][p+1]:
+                    arr[q][p] *= 2
+                    arr[q][p+1] = 0
+                    for i in range(1,N):
+                        for j in range(1,N+1):
+                            if arr[j][i] == 0:
+                                arr[j][i] = arr[j][i+1]
+                                arr[j][i+1] = 0
 
-
-        print('#{} {}'.format(i,len(newlist)),end='')
-
-        for i in range(len(newlist)):
-            print('',end=' ')
-            print(*newlist[i][1:],end='')
+    if S == 'right':
+        for a in range(N-1):
+            for i in range(N,1,-1):
+                for j in range(1,N+1):
+                    if arr[j][i] == 0:
+                        arr[j][i] = arr[j][i-1]
+                        arr[j][i-1] = 0
+        for p in range(N,1,-1):
+            for q in range(1,N+1):
+                if arr[q][p] == 0:
+                    arr[q][p] = arr[q][p-1]
+                    arr[q][p-1] = 0
+                    for i in range(N,1,-1):
+                        for j in range(1,N+1):
+                            if arr[j][i] == 0:
+                                arr[j][i] = arr[j][i-1]
+                                arr[j][i-1] = 0
+                if arr[q][p] == arr[q][p-1]:
+                    arr[q][p] *= 2
+                    arr[q][p-1] = 0
+                    for i in range(N,1,-1):
+                        for j in range(1,N+1):
+                            if arr[j][i] == 0:
+                                arr[j][i] = arr[j][i-1]
+                                arr[j][i-1] = 0
+    print('#{}'.format(t+1))
+    for i in range(1,N+1):
+        for j in range(1,N+1):
+            print(arr[i][j],end=' ')
         print()
-numbers()
