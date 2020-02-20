@@ -1,35 +1,75 @@
-def omok():
-    ppan = [[0]*21]
-    omok_p = [[0] + list(map(int, input().split())) + [0] for i in range(19)]
-    omok_pan = ppan + omok_p + ppan
+def calc():
+    stack = []
+    out = []
+    pr = {
+        '+': 1,
+        '-': 1,
+        '*': 2,
+        '/': 2,
+        '(': 0,
+    }
 
-    dx = [1, 1, 1, 0] 
-    dy = [-1, 1, 0, 1]
-
-    for j in range(1, 20):
-        for i in range(1, 20):
-            dol = omok_pan[i][j]
-            if dol:
-                for n in range(4):
-                    count = 1
-                    x = j
-                    y = i
-
+    text = input()
+    for x in text:
+        if x in '+-*/':
+            if stack:
+                if pr[x] > pr[stack[-1]]:
+                    stack.append(x)
+                else:
                     while True:
-                        if omok_pan[y + dy[n]][x + dx[n]] == omok_pan[i][j]:
-                            x += dx[n]
-                            y += dy[n]
-                            count += 1
-                            if count > 5:
-                                break
+                        if stack and pr[x] <= pr[stack[-1]]:
+                            out.append(stack.pop())
                         else:
-                                break
-                    if count == 5:
-                        if omok_pan[i - dy[n]][j - dx[n]] != dol:
-                            print(dol)
-                            print(i, j)
-                            return
-    else:
-        print(0)
-        return 
-omok()
+                            break
+                    stack.append(x)
+            else:
+                stack.append(x)
+        elif x == '(':
+            stack.append(x)
+        elif x == ')':
+            while True:
+                a = stack.pop()
+                if a == '(':
+                    break
+                else:
+                    out.append(a)
+        else:
+            out.append(x)
+    while stack:
+        out.append(stack.pop())
+
+    return out
+
+
+
+def forth():
+    t = 10
+    for tc in range(1, t+1):
+        input()
+        cal = calc()
+
+        stack = []
+        for token in cal:
+            if token == '.':
+                continue
+            elif token.isdecimal():
+                stack.append(token)
+            else:
+                try:
+                    a, b = int(stack.pop()), int(stack.pop())
+                    if token == "+":
+                        stack.append(b+a)
+                    elif token == "-":
+                        stack.append(b-a)
+                    elif token == "*":
+                        stack.append(b*a)
+                    elif token == "/":
+                        stack.append(b//a)
+                except:
+                    break
+        else:
+            if len(stack) == 1:
+                print('#{} {}'.format(tc, stack[-1]))
+                continue
+        print('#{} error'.format(tc))
+forth()

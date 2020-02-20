@@ -9,7 +9,7 @@ def cal():
         '(': 0,
     }
 
-    text = input().split()
+    text = input()
     for x in text:
         if x in '+-*/':
             if stack:
@@ -72,5 +72,6 @@ def magnetic():
                     r = 0
                     result += 1
 
-        print(f'#{tc} {result}')
-magnetic()
+        print('#{tc} {result}'.format())
+cal()
+#magnetic()
