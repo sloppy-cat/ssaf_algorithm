@@ -6,7 +6,7 @@
 def olimphic():
     t = int(input())
     for tc in range(1,t+1):
-        N, M = list(map(int, input().split()))
+        input()
         arr_N = list(map(int, input().split()))
         arr_M = list(map(int, input().split()))
 
