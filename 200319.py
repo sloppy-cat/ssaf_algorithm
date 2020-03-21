@@ -9,38 +9,28 @@ def _5688():
       i = -1
     print(f'#{tc+1} {i}')
 
+
+def check(arr):
+  for a in arr:
+    print(*a)
+  print()
+
 import copy
-def DFS(arr, idx, n):
-  if idx == n:
+def DFS(arr, i, n):
+  if i == n:
     return 1
   else:
     res = 0
-    for k in range(n):
-      if not(arr[idx][k]):
+    for j in range(n):
+      if not(arr[i][j]):
         n_arr = copy.deepcopy(arr)
-        for i in range(n):
-          n_arr[idx][i] = 1
-          n_arr[i][k] = 1
-          try:
-            n_arr[idx+i][k+i] = 1
-          except:
-            pass
-
-          try:
-            n_arr[idx-i][k-i] = 1
-          except:
-            pass
-
-          try:
-            n_arr[idx-i][k+i] = 1
-          except:
-            pass
-
-          try:
-            n_arr[idx+i][k-i] = 1
-          except:
-            pass
-        res += DFS(n_arr, idx+1, n)
+        for di, dj in (1,-1),(1,0),(1,1):
+          ii, jj= i, j
+          while(0<=ii<n and 0<=jj<n):
+            n_arr[ii][jj] = 1
+            ii += di
+            jj += dj
+        res += DFS(n_arr, i+1, n)
     return res
 
 a = input
