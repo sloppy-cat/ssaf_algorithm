@@ -1,6 +1,6 @@
 # 회전
-def rotation():
-  from collections import deque
+from collections import deque
+def rotation(): 
   for tc in range(int(input())):
     n, m = list(map(int,input().split()))
     deq = deque(list(map(int,input().split())))
@@ -34,7 +34,7 @@ def pizza():
 
 
 #회전
-#rotation()
+rotation()
 
 #피자 굽기
-#pizza()
+pizza()
