@@ -1,75 +1,39 @@
-def calc():
-    stack = []
-    out = []
-    pr = {
-        '+': 1,
-        '-': 1,
-        '*': 2,
-        '/': 2,
-        '(': 0,
-    }
-
-    text = input()
-    for x in text:
-        if x in '+-*/':
-            if stack:
-                if pr[x] > pr[stack[-1]]:
-                    stack.append(x)
-                else:
-                    while True:
-                        if stack and pr[x] <= pr[stack[-1]]:
-                            out.append(stack.pop())
-                        else:
-                            break
-                    stack.append(x)
-            else:
-                stack.append(x)
-        elif x == '(':
-            stack.append(x)
-        elif x == ')':
-            while True:
-                a = stack.pop()
-                if a == '(':
-                    break
-                else:
-                    out.append(a)
-        else:
-            out.append(x)
-    while stack:
-        out.append(stack.pop())
-
-    return out
-
-
-
-def forth():
-    t = 10
-    for tc in range(1, t+1):
-        input()
-        cal = calc()
-
-        stack = []
-        for token in cal:
-            if token == '.':
+T=int(input())
+dx = [-1,1,0,0]
+dy = [0,0,-1,1]
+ 
+for tc in range(1,T+1):
+    N,M,K = map(int,input().split())
+    arr = [list(map(int,input().split())) for _ in range(N)]
+    matrix = [[0] *(M+K) for _ in range(N+K)]
+    cell_list = [[] for _ in range(11)]
+    for i in range(N):
+        for j in range(M):
+            if arr[i][j] != 0:
+                matrix[i+K//2][j+K//2] = arr[i][j]
+                cell_list[arr[i][j]].append((i+K//2,j+K//2))
+     
+    for time in range(1,K+1):
+        print(f'time = {time}')
+        for i in range(N+K):
+            print(*matrix[i])
+        print()
+        for life in range(10,0,-1):
+            if time%(life+1) !=0:
                 continue
-            elif token.isdecimal():
-                stack.append(token)
-            else:
-                try:
-                    a, b = int(stack.pop()), int(stack.pop())
-                    if token == "+":
-                        stack.append(b+a)
-                    elif token == "-":
-                        stack.append(b-a)
-                    elif token == "*":
-                        stack.append(b*a)
-                    elif token == "/":
-                        stack.append(b//a)
-                except:
-                    break
-        else:
-            if len(stack) == 1:
-                print('#{} {}'.format(tc, stack[-1]))
-                continue
-        print('#{} error'.format(tc))
-forth()
+            survive = []
+            for val in cell_list[life]:
+                if (K-time)<(life-1):
+                    survive.append(val)
+                for k in range(4):
+                    nx = val[0]+dx[k]
+                    ny = val[1]+dy[k]
+                    if matrix[nx][ny] == 0:
+                        matrix[nx][ny] = life
+                        survive.append((nx,ny))
+ 
+            cell_list[life] = survive
+    result = 0
+    for i in cell_list:
+        result+=len(i)
+    print('#{} {}'.format(tc,result))
