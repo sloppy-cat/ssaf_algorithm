@@ -27,7 +27,7 @@ for tc in range(int(input())):
   disArr[0] = 0
   dis = 0
   n1, n2 = 0, 0
-  for n1 in range(n-1):
+  for _ in range(n-1):
     dis = INF
     visit[n1] = 1
     for i in range(n):
@@ -38,7 +38,4 @@ for tc in range(int(input())):
           n2 = i
     n1 = n2
   total = sum(disArr)
-  for d in disArr:
-    if d != INF:
-      total += d
   print(f'#{tc+1} {round(total*e)}')
